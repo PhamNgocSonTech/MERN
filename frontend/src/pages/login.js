@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { login } from "../redux/actions/authAction";
+import { login, googleLogin } from "../redux/actions/authAction";
 import { useDispatch, useSelector } from "react-redux";
 import "../styles/auth.css";
+import jwtDecode from "jwt-decode";
+import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
+
 export default function Login() {
   const initialState = { email: "", password: "" };
   const [userData, setUserData] = useState(initialState);
@@ -29,10 +32,22 @@ export default function Login() {
     console.log(userData);
     dispatch(login(userData));
   };
+
+  const handleGoogleLogin = async (googleData) => {
+    const dataParse =  jwtDecode(googleData.credential) ;
+    console.log(dataParse);
+
+    dispatch(googleLogin(dataParse));
+  };
+
+    const handleGoogleFailure = () => {
+    console.log("Failure");
+  };
+
   return (
     <div className="auth-page">
       <form onSubmit={handleSubmit}>
-        <h3 className="text-uppercase text-center mb-4">Social Me</h3>
+        <h3 className="text-uppercase text-center mb-4">Onstagram</h3>
 
         <div className="form-group">
           <label htmlFor="exampleInputEmail1">Email address</label>
@@ -78,6 +93,12 @@ export default function Login() {
             Register Now
           </Link>
         </p>
+        <GoogleLogin
+          buttonText="Login in with Google"
+          onSuccess={handleGoogleLogin}
+          onFailure={handleGoogleFailure}
+          cookiePolicy={"single_host_origin"}
+        ></GoogleLogin>
       </form>
     </div>
   );

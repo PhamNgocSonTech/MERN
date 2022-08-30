@@ -1,13 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
+import "./styles/global.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import DataProvider from "./redux/store";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+
 ReactDOM.render(
   <React.StrictMode>
     <DataProvider>
-      <App />
+      <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+        <App />
+      </GoogleOAuthProvider>
     </DataProvider>
   </React.StrictMode>,
   document.getElementById("root")

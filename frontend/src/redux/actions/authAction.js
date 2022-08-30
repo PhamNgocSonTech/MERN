@@ -1,9 +1,22 @@
-import { postDataAPI } from "../../utils/fetchData";
+import { postDataAPI, postGGDataAPI } from "../../utils/fetchData";
 import { GLOBALTYPES } from "./globalTypes";
 import valid from '../../utils/valid'
 
 export const TYPES = {
   AUTH: "AUTH",
+};
+
+export const googleLogin = (data) => async (dispatch) => {
+  dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
+  const res = await postGGDataAPI("google_login", data);
+  
+  dispatch({
+    type: GLOBALTYPES.AUTH,
+    payload: {
+      token: res.data.access_token,
+      user: res.data.user,
+    },
+  });
 };
 
 export const login = (data) => async (dispatch) => {
