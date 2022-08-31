@@ -17,6 +17,7 @@ export const googleLogin = (data) => async (dispatch) => {
       user: res.data.user,
     },
   });
+  dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: false } });
 };
 
 export const login = (data) => async (dispatch) => {

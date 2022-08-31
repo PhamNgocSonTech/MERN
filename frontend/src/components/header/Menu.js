@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../redux/actions/authAction";
 import { GLOBALTYPES } from "../../redux/actions/globalTypes";
 import Avatar from "../Avatar";
+
 const Menu = () => {
     const navLinks = [
         { label: "Home", icon: "home", path: "/" },
@@ -42,9 +43,8 @@ const Menu = () => {
             <Avatar src={auth.user.avatar} size="medium-avatar" />
           </span>
           <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-            <Link className="dropdown-item" to={`/profile${auth.user._id}`}>
-              Profile
-            </Link>
+          <Link className="dropdown-item" to={`/profile/${auth.user._id}`}>Profile</Link>
+
             <label
               htmlFor="theme"
               className="dropdown-item"
