@@ -9,6 +9,7 @@ export const TYPES = {
 export const googleLogin = (data) => async (dispatch) => {
   dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
   const res = await postGGDataAPI("google_login", data);
+  console.log(res);
   
   dispatch({
     type: GLOBALTYPES.AUTH,
@@ -24,6 +25,8 @@ export const login = (data) => async (dispatch) => {
   try {
     dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
     const res = await postDataAPI("login", data);
+   console.log(res);
+
     dispatch({
       type: GLOBALTYPES.AUTH,
       payload: {
