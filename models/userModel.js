@@ -39,7 +39,7 @@ const userSchema = new mongoose.Schema(
       default: "male",
     },
     mobile: { type: String, default: "" },
-    addresses: { type: String, default: "" },
+    address: { type: String, default: "" },
     story: { type: String, default: "", maxlength: 200 },
     website: { type: String, default: "" },
     followers: [{ type: mongoose.Types.ObjectId, ref: "user" }],

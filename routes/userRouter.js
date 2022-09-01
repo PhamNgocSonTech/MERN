@@ -6,4 +6,7 @@ router.get('/search', auth, userCtrl.searchUser)
 
 router.get('/user/:id', auth, userCtrl.getUser)
 
+router.patch('/user', auth, userCtrl.uppdateUser)
+
+
 module.exports = router

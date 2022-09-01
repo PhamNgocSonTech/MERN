@@ -34,12 +34,12 @@ const Search = () => {
     }
     return (
     <form className="search-form" onSubmit={handleSearch}>
-        <input type="text" name = "search" value = {search} id = "search"
+        <input type="text" name = "search" value = {search} id = "search" title='Enter to search'
         onChange={e => setSearch(e.target.value.toLowerCase().replace(/ /g,''))}/>
 
         <div className='search-icon' style={{opacity: search ? 0 : 0.3}}>
             <span className='material-icons'>search</span>
-            <span>Search</span>
+            <span>Enter to search</span>
         </div>
 
         <div className='close-search' onClick={handleClose} 
