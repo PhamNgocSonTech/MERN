@@ -16,7 +16,8 @@ const userCtrl = {
 
   getUser: async (req, res) => {
     try {
-      const user = await Users.findById(req.params.id).select("-password");
+      const user = await Users.findById(req.params.id).select("-password")
+      .populate("followers followings", "-password")
       if (!user) res.status(400).json({ msg: "User does not exist" });
       res.json({ user });
     } catch (err) {
@@ -42,6 +43,44 @@ const userCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
+
+  follow: async (req, res) => {
+    try {
+      const user = await Users.find({_id: req.params.id, followers: req.user._id});
+      if(user.length > 0) return res.status(500).json({msg: "You followed this user."});
+      
+      await Users.findOneAndUpdate({_id: req.params.id}, {
+        $push: {followers: req.user._id}
+      }, {new: true})
+
+      await Users.findOneAndUpdate({_id: req.user._id}, {
+        $push: {followings: req.params.id}
+      }, {new: true})
+
+      res.json({ msg:'Followed User.'});
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+
+  unfollow: async (req, res) => {
+    try {  
+      await Users.findOneAndUpdate({_id: req.params.id}, {
+        $pull: {followers: req.user._id}
+      }, {new: true})
+
+      await Users.findOneAndUpdate({_id: req.user._id}, {
+        $pull: {followings: req.params.id}
+      }, {new: true})
+
+      res.json({ msg:'UnFollow User'});
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+
+
+
 };
 
 module.exports = userCtrl;
