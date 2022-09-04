@@ -1,9 +1,20 @@
-import React from 'react'
+import React from "react";
+import Posts from "../components/home/Posts";
+import Status from "../components/home/Status";
 
-export default function home() {
+const Home = () => {
   return (
-    <div>
-        <h2>Home</h2>
+    <div className="home row mx-0">
+      <div className="col-md-8">
+        <Status />
+        <Posts />
+      </div>
+      
+      <div className="col-md-4">
+
+      </div>
     </div>
-  )
-}
+  );
+};
+
+export default Home;

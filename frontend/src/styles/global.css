@@ -56,3 +56,9 @@ code {
 
 /* -------- PROFILE ---------- */
 @import url("./profile.css");
+
+/* -------- HOME ---------- */
+@import url("./home.css");
+
+/* -------- STATUS MODAL ---------- */
+@import url("./status_modal.css");

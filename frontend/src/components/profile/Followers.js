@@ -1,12 +1,12 @@
 import React from 'react'
-import {useSelector} from 'react-redux'
 import UserCard from '../UserCard'
 import FollowBtn from '../FollowBtn'
+import { useSelector } from 'react-redux'
 
 const Followers = ({users, setShowFollowers}) => {
     const { auth } = useSelector(state => state)
-  return (
-    <div className="follow">
+    return (
+        <div className="follow">
             <div className="follow-box">
                 <h5 className="text-center">Followers</h5>
                 <hr/>
@@ -30,7 +30,7 @@ const Followers = ({users, setShowFollowers}) => {
                 
             </div>
         </div>
-  )
+    )
 }
 
 export default Followers
