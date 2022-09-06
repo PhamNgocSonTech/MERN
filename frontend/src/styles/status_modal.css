@@ -96,8 +96,8 @@
 }
 .status-modal .status-body .stream span{
     position: absolute;
-    top: 260px; /** my custom (default top: -10px;)*/
-    right: 200px; /** my custom (default right: 5px;) */
+    top: -10px; 
+    right: 5px; 
     color: crimson;
     font-size: 2rem;
     font-weight: 900;

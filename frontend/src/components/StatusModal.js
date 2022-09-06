@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { GLOBALTYPES } from "../redux/actions/globalTypes";
+import { createPost } from '../redux/actions/postAction'
 
 const StatusModal = () => {
   const { auth, theme } = useSelector((state) => state);
@@ -70,9 +71,22 @@ const StatusModal = () => {
      setStream(false)
   }
 
+  const handleSubmit = (e) => {
+    e.preventDefault()  
+    if(images.length === 0)
+    return dispatch({
+       type: GLOBALTYPES.ALERT, payload: {error: "Please add your photo"}
+    })
+    dispatch(createPost({content, images, auth}))
+    setContent('')
+    setImages([])
+    if(tracks) tracks.stop()
+    dispatch({type: GLOBALTYPES.ALERT, payload: false})
+  }
+  
   return (
     <div className="status-modal">
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="status-header">
           <h5 className="m-0">Create Post</h5>
           <span
@@ -146,7 +160,9 @@ const StatusModal = () => {
         </div>
 
         <div className="status-footer">
-          <button className="btn btn-secondary w-100">Post</button>
+            <button className="btn btn-secondary w-100" type="submit">
+                Post
+            </button>
         </div>
       </form>
     </div>
