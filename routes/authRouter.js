@@ -8,4 +8,7 @@ router.post("/logout", authCtrl.logout);
 router.post("/refresh_token", authCtrl.generateAccessToken);
 router.post('/google_login', authCtrl.googleLogin);
 
+router.get('/auth/github', authCtrl.gitHubLogin)
+router.get('/me', authCtrl.me)
+
 module.exports = router;

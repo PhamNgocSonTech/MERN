@@ -1,6 +1,7 @@
 import { postDataAPI, postGGDataAPI } from "../../utils/fetchData";
 import { GLOBALTYPES } from "./globalTypes";
-import valid from '../../utils/valid'
+import valid from '../../utils/valid';
+import { withCookies, Cookies } from "react-cookie";
 
 export const TYPES = {
   AUTH: "AUTH",
@@ -19,6 +20,23 @@ export const googleLogin = (data) => async (dispatch) => {
     },
   });
   dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: false } });
+};
+
+export const githubLogin = (data) => async (dispatch) => {
+  console.log("git hub");
+  if (data) {
+    dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
+
+    dispatch({
+      type: GLOBALTYPES.AUTH,
+      payload: {
+        token: data.access_token,
+        user: data.user,
+      },
+    });
+    dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: false } });
+    localStorage.setItem("firstLogin", true);
+  }
 };
 
 export const login = (data) => async (dispatch) => {

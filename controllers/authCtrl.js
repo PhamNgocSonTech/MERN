@@ -1,6 +1,8 @@
 const Users = require('../models/userModel')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const axios = require("axios");
+const querystring = require("querystring");
 
 const authCtrl = {
     register: async (req, res) => {
@@ -149,6 +151,7 @@ const authCtrl = {
     logout: async (req, res) => {
         try {
             res.clearCookie('refreshtoken', {path: '/api/refresh_token'})
+            res.clearCookie("jwt-cookie");
             return res.json({msg: "Logged out!"})
         } catch (err) {
             return res.status(500).json({msg: err.message})
@@ -179,16 +182,159 @@ const authCtrl = {
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
-    }
-}
+    },
+    gitHubLogin: async (req, res, next) => {
+      try {
+        const code = req.query.code;
+        const path = req.query.path;
+        console.log(code);
+        console.log(path);
+        if (!code) {
+          throw new Error("No Code");
+        }
+        const githubUser = await getGitUser(code);
+  
+        const { id, login, name } = githubUser;
+        // res.status(200).json({ msg: "ok" });
+        const user = await Users.findOne({ gitId: id }).populate(
+          "followers followings",
+          "avatar username fullname followers followings"
+        );
+        if (!user) {
+          const newUser = new Users({
+            fullname: name,
+            email: "son@gmail.com",
+            username: login,
+            password: "123456",
+            gitId: id,
+          });
+          await newUser.save();
+  
+          const access_token = createAccessToken({ id: newUser._id });
+          const refresh_token = createRefreshToken({ id: newUser._id });
+          res.cookie("refreshtoken", refresh_token, {
+            httpOnly: true,
+            path: "/api/refresh_token",
+            maxAge: 30 * 24 * 60 * 60 * 1000, // 30days
+          });
+  
+          res.json({
+            msg: "Login Success!",
+            access_token,
+            user: {
+              ...newUser._doc,
+              password: "",
+            },
+          });
+          console.log("ok1");
+        } else {
+          const access_token = createAccessToken({ id: user._id });
+          const refresh_token = createRefreshToken({ id: user._id });
+  
+          res.cookie("refreshtoken", refresh_token, {
+            httpOnly: true,
+            path: "/api/refresh_token",
+            maxAge: 30 * 24 * 60 * 60 * 1000, // 30days
+          });
+          res.cookie("jwt-cookie", access_token, {
+            httpOnly: true,
+            domain: "localhost",
+          });
+          // res.json({
+          //   msg: "Login Success!",
+          //   access_token,
+          //   user: {
+          //     ...user._doc,
+          //     password: "",
+          //   },
+          // });
+          res.redirect(`http://localhost:3000${path}`);
+          console.log("Success");
+        }
+        // console.log("git hub user", githubUser);
+        // res.redirect(path);
+      } catch (err) {
+        return res.status(500).json({ msg: err.message });
+      }
+    },
+    // git: async (req, res) => {
+    //   console.log(req.user)
+    //   next()
+    // }
+    me: async (req, res) => {
+      try {
+        const cookie = req.cookies["jwt-cookie"];
+        // const cookie = get(req.cookies["jwt-cookie"]);
+        const decode = jwt.verify(
+          cookie,
+          process.env.ACCESS_TOKEN_SECRET,
+          async (err, result) => {
+            if (err) return res.status(400).json({ msg: "Please login now." });
+  
+            const user = await Users.findById(result.id)
+              .select("-password")
+              .populate(
+                "followers followings",
+                "avatar username fullname followers followings"
+              );
+  
+            if (!user)
+              return res.status(400).json({ msg: "This does not exist." });
+  
+            const access_token = createAccessToken({ id: result.id });
+  
+            res.json({
+              access_token,
+              user,
+            });
+          }
+        );
+      } catch (e) {
+        console.log(e);
+        return res.send(null);
+      }
+    },
+  };
+  
+  const createAccessToken = (payload) => {
+    return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
+      expiresIn: "1d",
+    });
+  };
+  
+  const createRefreshToken = (payload) => {
+    return jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {
+      expiresIn: "30d",
+    });
+  };
+  const getGitUser = async (code) => {
+    const githubToken = await axios
+      .post(
+        `https://github.com/login/oauth/access_token?client_id=c1a9b1615a6dacb34f42&client_secret=4a1d2345f8480e0f1c1a7d5fba082434a9d8282d&code=${code}`
+      )
+      .then((res) => res.data)
+      .catch((error) => {
+        throw error;
+      });
+    console.log(code);
+    console.log("githubtoken", githubToken);
+    const decode = querystring.parse(githubToken);
+    console.log(decode);
+    const access_token = decode.access_token;
+    console.log(access_token);
+    return axios
+      .get("https://api.github.com/user", {
+        headers: { Authorization: `Bearer ${access_token}` },
+      })
+      .then((res) => res.data)
+      .catch((error) => {
+        console.log(" git hub errorƒ");
+        throw error;
+      });
+};
 
 
-const createAccessToken = (payload) => {
-    return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '1d'})
-}
 
-const createRefreshToken = (payload) => {
-    return jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '30d'})
-}
+
 
 module.exports = authCtrl

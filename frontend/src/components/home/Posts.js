@@ -6,7 +6,7 @@ import CardFooter from './post_card/CardFooter'
 
 
 
-const Posts = () => {
+const  Posts = () => {
   const { homePosts } = useSelector((state) => state)
 
   return (

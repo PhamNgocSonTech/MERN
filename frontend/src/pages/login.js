@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { login, googleLogin } from "../redux/actions/authAction";
+import { login, googleLogin, githubLogin } from "../redux/actions/authAction";
 import { useDispatch, useSelector } from "react-redux";
 import "../styles/auth.css";
 import jwtDecode from "jwt-decode";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
+import axios from "axios";
 
 export default function Login() {
   const initialState = { email: "", password: "" };
@@ -12,6 +13,10 @@ export default function Login() {
   const { email, password } = userData;
   const [typePass, setTypeData] = useState(false);
   const { auth } = useSelector((state) => state);
+
+  const GITHUB_CLIENT_ID = "c1a9b1615a6dacb34f42";
+  const gitHubRedirectURL = "http://localhost:5000/api/auth/github";
+  const path = "/";
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -43,6 +48,18 @@ export default function Login() {
     const handleGoogleFailure = () => {
     console.log("Failure");
   };
+  
+  useEffect(() => {
+    (async function () {
+      const u = await axios
+        .get(`http://localhost:5000/api/me`, {
+          withCredentials: true,
+        })
+        .then((res) => res.data);
+      console.log(u);
+      dispatch(githubLogin(u));
+    })();
+  }, []);
 
   return (
     <div className="auth-page">
@@ -93,12 +110,30 @@ export default function Login() {
             Register Now
           </Link>
         </p>
-        <GoogleLogin
-          buttonText="Login in with Google"
-          onSuccess={handleGoogleLogin}
-          onFailure={handleGoogleFailure}
-          cookiePolicy={"single_host_origin"}
-        ></GoogleLogin>
+        <div className="custom-btn">
+          <GoogleLogin
+            text="signin with Google"
+            // size="medium"
+            shape="rectangular"
+            // locale="circle"
+            ux_mode="popup"
+            cancel_on_tap_outside
+            context="signin"
+            theme="outline"
+            width="70"
+            onSuccess={handleGoogleLogin}
+            onFailure={handleGoogleFailure}
+            cookiePolicy={"single_host_origin"}
+          />
+          <a
+            href={`https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${gitHubRedirectURL}?path=${path}&scope=user:email`}
+          >
+            <img
+              src="https://coderwall-assets-0.s3.amazonaws.com/uploads/picture/file/4363/github.png"
+              alt="Sign in with GitHub"
+            />
+          </a>
+        </div>
       </form>
     </div>
   );
