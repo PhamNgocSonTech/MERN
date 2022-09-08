@@ -2,7 +2,7 @@ import React from 'react'
 
 const Posts = () => {
   return (
-    <h2>Posts</h2>
+    <h2>Welcome to My Posts </h2>
   )
 }
 

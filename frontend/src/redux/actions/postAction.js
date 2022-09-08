@@ -6,11 +6,14 @@ export const POST_TYPES = {
   CREATE_POST: "CREATE_POST",
   LOADING_POST: "LOADING_POST",
   GET_POSTS: "GET_POSTS",
+  UPDATE_POST: 'UPDATE_POST',
 };
 
-export const createPost = ({ content, images, auth }) => async (dispatch) => {
+export const createPost =
+  ({ content, images, auth }) =>
+  async (dispatch) => {
     let media = [];
-    
+
     try {
       dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
 
@@ -51,36 +54,69 @@ export const getPosts = (token) => async (dispatch) => {
   }
 };
 
-export const updatePost = ({ content, images, auth, status }) => async (dispatch) => {
-  let media = [];
+export const updatePost =
+  ({ content, images, auth, status }) =>
+  async (dispatch) => {
+    let media = [];
 
-  const imgNewUrl = images.filter(img => !img.url)
-  const imgOldUrl = images.filter(img => img.url)
+    const imgNewUrl = images.filter((img) => !img.url);
+    const imgOldUrl = images.filter((img) => img.url);
 
+    console.log({ imgNewUrl, imgOldUrl });
+    if (
+      status.content === content &&
+      imgNewUrl.length === 0 &&
+      imgOldUrl.length === status.images.length
+    )
+      return;
+    try {
+      dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
 
-  console.log({imgNewUrl, imgOldUrl});
-  if(status.content === content 
-    && imgNewUrl.length === 0 
-    && imgOldUrl.length === status.images.length) return
-  try {
-    dispatch({ type: GLOBALTYPES.ALERT, payload: { loading: true } });
+      if (imgNewUrl.length > 0) media = await imageUpload(imgNewUrl);
 
-    if (imgNewUrl.length > 0) media = await imageUpload(imgNewUrl);
+      const res = await patchDataAPI(
+        `post/${status._id}`,
+        {
+          content,
+          images: [...imgOldUrl, ...media],
+        },
+        auth.token
+      );
+      console.log(res);
+      dispatch({ type: POST_TYPES.UPDATE_POST, payload: res.data.newPost });
+
+      dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.msg } });
+    } catch (err) {
+      dispatch({
+        type: GLOBALTYPES.ALERT,
+        payload: { error: err.response.data.msg },
+      });
+    }
+  };
+
+export const likePost = ({ post, auth }) => async (dispatch) => {
+    const newPost = { ...post, likes: [...post.likes, auth.user] };
+    dispatch({ type: POST_TYPES.UPDATE_POST, payload: newPost });
+    try {
+      await patchDataAPI(`post/${post._id}/like`, null, auth.token)
+    }catch (err) {
+      dispatch({
+        type: GLOBALTYPES.ALERT,
+        payload: { error: err.response.data.msg },
+      });
+    }
+  };
+
+  export const unLikePost = ({ post, auth }) => async (dispatch) => {
+    const newPost = { ...post, likes: post.likes.filter(like => like._id !== auth.user._id) };
+    dispatch({ type: POST_TYPES.UPDATE_POST, payload: newPost });
     
-    const res = await patchDataAPI(
-      `post/${status._id}`,
-      { 
-        content, images: [...imgOldUrl, ...media] 
-
-      },auth.token);
-      console.log(res)
-    // dispatch({ type: POST_TYPES.CREATE_POST, payload: res.data.newPost });
-
-    dispatch({ type: GLOBALTYPES.ALERT, payload: { success: res.data.msg } });
-  } catch (err) {
-    dispatch({
-      type: GLOBALTYPES.ALERT,
-      payload: { error: err.response.data.msg },
-    });
-  }
-};
+    try {
+      await patchDataAPI(`post/${post._id}/unlike`, null, auth.token)
+    }catch (err) {
+      dispatch({
+        type: GLOBALTYPES.ALERT,
+        payload: { error: err.response.data.msg },
+      });
+    }
+  };
