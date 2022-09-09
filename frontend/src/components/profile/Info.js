@@ -39,7 +39,7 @@ const Info = () => {
             dispatch({type: GLOBALTYPES.MODAL, payload: false})
 
       }
-    }, [showFollowers, showFollowings, onEdit])
+    }, [showFollowers, showFollowings, onEdit, dispatch])
     
 
     return (

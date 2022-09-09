@@ -1,0 +1,61 @@
+.comment-input{
+    display: flex;
+    align-items: center;
+}
+.comment-input input{
+    background: #f7f7f7;
+    border: none;
+    outline: none;
+    flex: 1;
+    overflow: auto;
+}
+.comment-input .postBtn{
+    border: none;
+    outline: none;
+    background: #f7f7f7;
+    color: blue;
+    font-weight: 600;
+}
+.comment-input .dropdown-menu{
+    transform: translate3d(-120px, -200px, 0px) !important;
+}
+
+/* ---------- Comments ---------- */
+.comment-display{
+    padding: 10px 25px;
+}
+.comment-card .comment-content{
+    background: #eee;
+    padding: 7px;
+    border-radius: 10px;
+    border-top-left-radius: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.comment-card .comment-content .readMore{
+    cursor: pointer;
+    color: crimson;
+}
+
+.comment-card .comment-content .nav-item{
+    cursor: pointer;
+    opacity: 0;
+}
+.comment-card .comment-content:hover .nav-item{
+    opacity: 1;
+}
+.comment-card .comment-content .dropdown-menu{
+    position: absolute;
+    right: 0;
+    left: inherit;
+}
+.comment-card .comment-content .dropdown-item{
+    display: flex;
+    margin: 10px 0;
+}
+.comment-card .comment-content textarea{
+    width: 100%;
+    border: none;
+    outline: none;
+}

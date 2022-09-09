@@ -63,6 +63,9 @@ code {
 /* -------- STATUS MODAL ---------- */
 @import url("./status_modal.css");
 
+/* -------- COMMENTS ---------- */
+@import url("./comments.css");
+
 .mode {
   width: 100%;
   height: 100vh;
