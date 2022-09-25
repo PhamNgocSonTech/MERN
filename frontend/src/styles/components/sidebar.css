@@ -1,0 +1,5 @@
+.SideBar_container {
+    width: var(--sidebar-width);
+    height: var(--sidebar-height);
+    background-color: blue;
+}

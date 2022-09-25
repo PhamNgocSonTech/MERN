@@ -1,0 +1,13 @@
+.HomeLayout_container {
+    max-width: calc(500px + var(--sidebar-width));
+    margin: 30px auto 0 auto;
+    display: flex;
+}
+
+.HomeLayout_sidebar {
+    margin-left: 12px;
+}
+
+.HomeLayout_content {
+    flex-grow: 1;
+}

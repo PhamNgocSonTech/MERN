@@ -1,17 +1,21 @@
 .header {
     width: 100%;
-    min-height: 70px;
+    height: var(--header-height);
     position: sticky;
     top: 0;
     left: 0;
     z-index: 2;
     box-shadow: 0 0 10px #ddd;
     background: #f8f9fa;
-    border: 1px solid rgb(0, 0, 0, .125);
 }
 
 .header .nav-bar {
     width: 100%;
+    height: 100%;
+}
+
+.header .navbar {
+    padding: 0 1rem;
     height: 100%;
 }
 
@@ -31,6 +35,7 @@
 
 .header .menu .material-icons {
     font-size: 30px;
+    vertical-align: -webkit-baseline-middle;
 }
 
 .header .menu .dropdown-menu {
@@ -47,6 +52,7 @@
 
 .header .search-form {
     position: relative;
+    flex-grow: 0.1;
 }
 
 .header .search-form #search {
@@ -57,6 +63,7 @@
     outline: none;
     text-indent: 5px;
     border-radius: 3px;
+    height: 35px;
 }
 
 .header .search-form .search-icon {
@@ -71,6 +78,7 @@
 .header .search-form .search-icon .material-icons {
     font-size: 14px;
     transform: translateY(3px);
+    margin-right: 5px;
 }
 
 .header .search-form .close-search {
@@ -80,6 +88,7 @@
     cursor: pointer;
     font-weight: 900;
     color: crimson;
+    font-size: 21px;
 }
 
 .header .search-form .users {

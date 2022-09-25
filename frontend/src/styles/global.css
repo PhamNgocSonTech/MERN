@@ -1,3 +1,9 @@
+:root {
+  --header-height: 60px;
+  --sidebar-width: 320px;
+  --sidebar-height: 445px;
+}
+
 * {
   padding: 0;
   box-sizing: border-box;
@@ -33,7 +39,6 @@ code {
 }
 
 .main {
-  max-width: 1000px;
   width: 100%;
   margin: auto;
 }
@@ -65,6 +70,12 @@ code {
 
 /* -------- COMMENTS ---------- */
 @import url("./comments.css");
+
+/* LAYOUTS */
+@import url("./components/sidebar.css");
+
+@import url("./layouts/home_layout.css");
+
 
 .mode {
   width: 100%;
