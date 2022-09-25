@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getDataAPI } from "../../utils/fetchData";
 import { GLOBALTYPES } from "../../redux/actions/globalTypes";
 import UserCard from "../UserCard";
-import LoadIcon from "../../images/Infinity-1s-64px.gif";
+import LoadIcon from "../../images/loading.gif";
 
 const Search = () => {
     const [search, setSearch] = useState("");
@@ -12,11 +12,17 @@ const Search = () => {
     const dispatch = useDispatch();
     const [load, setLoad] = useState(false);
 
+    const [closeBtn, setCloseBtn] = useState(false);
+
     useEffect(async () => {
-        if (!search) return;
+        if (!search) {
+            setCloseBtn(false);
+            return;
+        }
 
         try {
             setLoad(true);
+            setCloseBtn(true);
             const res = await getDataAPI(
                 `search?username=${search}`,
                 auth.token
@@ -64,18 +70,16 @@ const Search = () => {
                 }
             />
 
-            <div className="search-icon" style={{ opacity: search ? 0 : 0.3 }}>
+            <div className="search-icon" style={{ opacity: search ? 0 : 0.7 }}>
                 <span className="material-icons">search</span>
                 <span>Enter to search</span>
             </div>
 
-            <div
-                className="close-search"
-                onClick={handleClose}
-                style={{ opacity: users.length === 0 ? 0 : 1 }}
-            >
-                &times;
-            </div>
+            {closeBtn && (
+                <div className="close-search" onClick={handleClose}>
+                    &times;
+                </div>
+            )}
 
             <button type="submit" style={{ display: "none" }}>
                 Search
@@ -84,15 +88,18 @@ const Search = () => {
             {load && <img className="loading" src={LoadIcon} alt="loading" />}
 
             <div className="users">
-                {search &&
-                    users.map((user) => (
-                        <UserCard
-                            key={user._id}
-                            user={user}
-                            border="border"
-                            handleClose={handleClose}
-                        />
-                    ))}
+                {search && (
+                    <div>
+                        <span className="acc-label">Accounts</span>
+                        {users.map((user) => (
+                            <UserCard
+                                key={user._id}
+                                user={user}
+                                handleClose={handleClose}
+                            />
+                        ))}
+                    </div>
+                )}
             </div>
         </form>
     );

@@ -62,8 +62,9 @@
     width: 100%;
     outline: none;
     text-indent: 5px;
-    border-radius: 3px;
+    border-radius: 10px;
     height: 35px;
+    padding: 3px;
 }
 
 .header .search-form .search-icon {
@@ -84,10 +85,10 @@
 .header .search-form .close-search {
     position: absolute;
     top: 0;
-    right: 5px;
+    right: 8px;
     cursor: pointer;
     font-weight: 900;
-    color: crimson;
+    color: rgb(56, 53, 53);
     font-size: 21px;
 }
 
@@ -99,6 +100,11 @@
     max-height: calc(100vh - 150px);
     overflow: auto;
     margin-top: 3px;
+}
+
+.users .acc-label {
+    margin-left: 5px;
+    font-size: 13px;
 }
 
 .header .search-form .loading {
