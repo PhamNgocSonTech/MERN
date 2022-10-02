@@ -1,23 +1,30 @@
 .supper-avatar {
     height       : 150px;
     width        : 150px;
-    border-radius: 50%
+    border-radius: 50%;
+    object-fit: cover;
+
 }
 
 .big-avatar {
-    height       : 50px;
-    width        : 50px;
-    border-radius: 50%
+    height       : 40px;
+    width        : 40px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .medium-avatar {
     height       : 30px;
     width        : 30px;
-    border-radius: 50%
+    border-radius: 50%;
+    object-fit: cover;
+
 }
 
 .small-avatar {
     height       : 20px;
     width        : 20px;
-    border-radius: 50%
+    border-radius: 50%;
+    object-fit: cover;
+
   }

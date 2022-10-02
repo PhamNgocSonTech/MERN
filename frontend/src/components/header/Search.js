@@ -4,6 +4,7 @@ import { getDataAPI } from "../../utils/fetchData";
 import { GLOBALTYPES } from "../../redux/actions/globalTypes";
 import UserCard from "../UserCard";
 import LoadIcon from "../../images/loading.gif";
+import Popover from "../popover/Popover";
 
 const Search = () => {
     const [search, setSearch] = useState("");
@@ -87,9 +88,9 @@ const Search = () => {
 
             {load && <img className="loading" src={LoadIcon} alt="loading" />}
 
-            <div className="users">
+            {/* <div className="users">
                 {search && (
-                    <div>
+                    <>
                         <span className="acc-label">Accounts</span>
                         {users.map((user) => (
                             <UserCard
@@ -98,9 +99,24 @@ const Search = () => {
                                 handleClose={handleClose}
                             />
                         ))}
-                    </div>
+                    </>
                 )}
-            </div>
+            </div> */}
+
+            <Popover>
+                {search && (
+                    <>
+                        <span className="acc-label">Accounts</span>
+                        {users.map((user) => (
+                            <UserCard
+                                key={user._id}
+                                user={user}
+                                handleClose={handleClose}
+                            />
+                        ))}
+                    </>
+                )}
+            </Popover>
         </form>
     );
 };

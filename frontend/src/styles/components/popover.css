@@ -1,0 +1,21 @@
+.p_over {
+    position: absolute;
+    width: 100%;
+    min-width: 250px;
+    background: #fafafa;
+    max-height: calc(100vh - 150px);
+    overflow: auto;
+    margin-top: 3px;
+    box-shadow: rgb(0 0 0 / 12%) 0px 2px 12px;
+    border-radius: 5px;
+    right: 0;
+}
+
+.p_over::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background: rgba(22, 24, 35, .06);
+}
+
+.p_over::-webkit-scrollbar {
+    width: 6px;
+}

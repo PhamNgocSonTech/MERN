@@ -26,7 +26,7 @@
 
 /* ----------------- Header -----------------*/
 .header .menu li {
-    opacity: 0.5;
+    opacity: 0.3;
 }
 
 .header .menu li.active {
@@ -65,6 +65,7 @@
     border-radius: 10px;
     height: 35px;
     padding: 3px;
+    font-size: 12px;
 }
 
 .header .search-form .search-icon {
@@ -102,9 +103,10 @@
     margin-top: 3px;
 }
 
-.users .acc-label {
-    margin-left: 5px;
-    font-size: 13px;
+.acc-label {
+    margin-left: 8px;
+    opacity: 0.8;
+    font-size: 12px;
 }
 
 .header .search-form .loading {
@@ -114,6 +116,33 @@
     width: 15px;
     height: 15px;
     transform: translateY(-50%);
+}
+
+.navbar-nav .nav-item .nav-link{
+    color: var(--primary-color) !important;
+}
+
+.navbar-nav .nav-item.dropdown {
+    opacity: 1;
+}
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+.dropdown-item.it-dropdown{
+    padding: .6rem 1.5rem;
+    font-weight: 400;
+    margin: 0;
+    font-size: 14px;
+}
+
+.dropdown-divider {
+    margin: 0;
+}
+
+.p_over.setting_popover {
+    min-width: 190px;
 }
 
 
