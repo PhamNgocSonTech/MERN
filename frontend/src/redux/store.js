@@ -11,7 +11,11 @@ const store = createStore(
 );
 
 const DataProvider = ({ children }) => {
-  return <Provider store={store}>{children}</Provider>;
+  return(
+    <Provider store={store}>
+        {children}
+    </Provider>
+)
 };
 
 export default DataProvider;
