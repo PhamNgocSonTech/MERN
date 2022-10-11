@@ -37,7 +37,7 @@ const CardFooter = ({ post }) => {
     };
 
     return (
-        <div className="card-footer">
+        <div className="card-footer card-footer-fix">
             <div className="card-icon-menu">
                 <div>
                     <LikeButton
@@ -54,11 +54,11 @@ const CardFooter = ({ post }) => {
                 <i className="far fa-bookmark" />
             </div>
             <div className="d-flex justify-content-between">
-                <h6 style={{ padding: "0 25px", cursor: "pointer" }}>
+                <h6 className="h6-font-size" style={{ padding: "0 10px", cursor: "pointer" }}>
                     {post.likes.length} likes
                 </h6>
 
-                <h6 style={{ padding: "0 25px", cursor: "pointer" }}>
+                <h6 className="h6-font-size" style={{ padding: "0 10px", cursor: "pointer" }}>
                     {post.comments.length} comments
                 </h6>
             </div>

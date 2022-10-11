@@ -6,6 +6,10 @@
   --primary-color: #FE2C55;
 }
 
+.h6-font-size {
+  font-size: 0.85rem;
+}
+
 
 a:hover {
   text-decoration: none;

@@ -11,7 +11,7 @@ const Status = () => {
             <Avatar src={auth.user.avatar} size="big-avatar" />
 
             <button
-                className="statusBtn flex-fill"
+                className="statusBtn flex-fill text-center"
                 onClick={() =>
                     dispatch({ type: GLOBALTYPES.STATUS, payload: true })
                 }

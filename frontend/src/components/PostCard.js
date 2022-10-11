@@ -7,16 +7,15 @@ import Comments from "./home/Comments";
 import InputComment from "./home/InputComment";
 
 const PostCard = ({ post }) => {
-  return (
-    <div className="card my-3">
-      <CardHeader post={post} />
-      <CardBody post={post}/>
-      <CardFooter post={post} />
+    return (
+        <div className="card my-3 cart-post">
+            <CardHeader post={post} />
+            <CardBody post={post} />
 
-      <Comments post={post} />
-      <InputComment post={post} />
-    </div>
-  );
+            {/* <Comments post={post} /> */}
+            <InputComment post={post} />
+        </div>
+    );
 };
 
 export default PostCard;

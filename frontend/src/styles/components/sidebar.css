@@ -1,5 +1,71 @@
 .SideBar_container {
     width: var(--sidebar-width);
     height: var(--sidebar-height);
-    background-color: antiquewhite;
+    /* background-color: antiquewhite; */
+}
+
+.SideBar_myaccount, .SideBar_suggestion_label{
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.SideBar_myaccount .SideBar_avatar img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%
+}
+
+.SideBar_infor_account a {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.SideBar_infor_account p {
+    font-size: 14px;
+    opacity: 0.7;
+}
+
+.SideBar_myaccount .SideBar_infor_account {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: 8px;
+    flex-grow: 1;
+}
+
+.SideBar_switch_acc {
+    display: flex;
+    align-items: center;
+}
+
+.SideBar_suggestion_label {
+    justify-content: space-between;
+}
+
+.SideBar_suggestion_label p {
+    font-size: 13px;
+    opacity: 0.8;
+    /* font-weight: 800; */
+}
+
+.SideBar_switch_acc a {
+    font-weight: 600;
+    font-size: 12px;
+    color: #007bff !important;
+}
+
+.SideBar_myaccount.SideBar_mysubaccount {
+    margin-bottom: 14px;
+}
+
+.SideBar_myaccount.SideBar_mysubaccount img{
+    width: 35px;
+    height: 35px;
+}
+.SideBar_avatar.SideBar_subavatar {
+    margin-left: 5px;
+}
+
+.SideBar_infor_account.SideBar_sub_infor_account p{
+    font-size: 12px;
 }

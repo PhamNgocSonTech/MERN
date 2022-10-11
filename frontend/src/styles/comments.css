@@ -15,9 +15,19 @@
     background: #f7f7f7;
     color: blue;
     font-weight: 600;
+    opacity: 0.9;
 }
 .comment-input .dropdown-menu{
     transform: translate3d(-120px, -200px, 0px) !important;
+}
+
+.comment-input .emote-section:hover {
+    cursor: pointer;
+}
+
+.comment-input .emote-picker {
+    z-index: 999;
+    bottom: 22px;
 }
 
 /* ---------- Comments ---------- */
