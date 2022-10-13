@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { createComment } from "../../redux/actions/commentAction";
-import EmojiPicker, { EmojiStyle } from "emoji-picker-react";
+import EmojiPicker from "emoji-picker-react";
 import icon from "../../images/emote.svg";
 
 const InputComment = ({ children, post }) => {
-    const [content, setContent] = useState("");
-    const [isShowEmote, setIsShowEmote] = useState(false);
+    const [content, setContent] = useState(""); //const [text, setText] = useState('')
+    const [isShowEmote, setIsShowEmote] = useState(false); //const [isShow, setIsShow] = useState(false)
     const { auth } = useSelector((state) => state);
     const dispatch = useDispatch();
 
@@ -23,13 +23,21 @@ const InputComment = ({ children, post }) => {
         dispatch(createComment(post, newComment, auth));
     };
 
-    const handleIconChoose = (icon) => {
-        setContent((pre) => pre + icon.emoji);
+    const handleTextChange = (e) => {
+        setContent(e.target.value)
+    } 
+
+    const handleIconChoose = (icon, e) => {
+        setContent(pre => pre.concat(icon.emoji))
     };
 
-    const handleShowHideEmoteIcon = () => {
+    const handleShowHideEmoteIcon = (e) => {
         setIsShowEmote(!isShowEmote);
     };
+
+    const handleLeavePicker = () => {
+        setIsShowEmote(false)
+    }
     return (
         <form className="card-footer comment-input " onSubmit={handleSubmit}>
             {children}
@@ -37,14 +45,10 @@ const InputComment = ({ children, post }) => {
                 className="d-flex mr-3 position-relative emote-section"
                 onClick={handleShowHideEmoteIcon}
             >
-                <img src={icon}></img>
+                <img alt="icon" src={icon}></img>
                 {isShowEmote && (
-                    <div className="position-absolute emote-picker">
-                        <EmojiPicker
-                            onEmojiClick={handleIconChoose}
-                            emojiStyle="facebook"
-                            lazyLoadEmojis={true}
-                        />
+                    <div className="position-absolute emote-picker" onClick={(e) => e.stopPropagation()} onMouseLeave={handleLeavePicker}>
+                        <EmojiPicker emojiStyle="facebook" onEmojiClick={handleIconChoose} theme="light"/>
                     </div>
                 )}
             </div>
@@ -53,7 +57,7 @@ const InputComment = ({ children, post }) => {
                 type="text"
                 placeholder="Add your comment..."
                 value={content}
-                onChange={(e) => setContent(e.target.value)}
+                onChange={handleTextChange}
             />
 
             <button type="submit" className="postBtn">

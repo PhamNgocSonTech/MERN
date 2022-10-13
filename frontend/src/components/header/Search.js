@@ -44,6 +44,12 @@ const Search = () => {
         setUsers([]);
     };
 
+    const handleHoverOut = () => {
+        setTimeout(() => {
+            setSearch("")
+        }, 500);
+    }
+
     // const handleSearch = async (e) => {
     //     e.preventDefault()
     //     if(!search) return
@@ -103,7 +109,7 @@ const Search = () => {
                 )}
             </div> */}
 
-            <Popover>
+            <Popover onHoverOut={handleHoverOut}>
                 {search && (
                     <>
                         <span className="acc-label">Accounts</span>

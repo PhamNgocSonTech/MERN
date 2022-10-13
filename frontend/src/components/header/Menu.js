@@ -28,6 +28,12 @@ const Menu = () => {
         setShowSetting(!showSetting);
     };
 
+    const handleHoverOutPopup = () => {
+        setTimeout(() => {
+            setShowSetting(false)
+        }, 500);
+    }
+
     return (
         <div className="menu">
             <ul className="navbar-nav flex-row ">
@@ -57,7 +63,7 @@ const Menu = () => {
 
                     {/* Dropdown menu setting */}
                     {showSetting && (
-                        <Popover className="setting_popover">
+                        <Popover className="setting_popover" onHoverOut={handleHoverOutPopup}>
                             <Link
                                 className="dropdown-item it-dropdown"
                                 to={`/profile/${auth.user._id}`}

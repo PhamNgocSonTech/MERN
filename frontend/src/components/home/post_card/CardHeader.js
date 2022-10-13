@@ -25,7 +25,7 @@ const CardHeader = ({ post }) => {
                     <h6 className="m-0">
                         <Link
                             to={`/profile/${post.user._id}`}
-                            className="text-dark"
+                            className="text-dark font-weight-bold"
                         >
                             {post.user.username}
                         </Link>
